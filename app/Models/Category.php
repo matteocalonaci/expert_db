@@ -12,23 +12,24 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
-        'parent_category_id',
+        'parent_id', // Cambiato da 'parent_category_id' a 'parent_id'
     ];
 
     // Relazione con i prodotti
     public function products()
     {
-        return $this->hasMany(Product::class, 'subcategory_id'); // Questo dovrebbe essere 'category_id' se 'subcategory_id' non è corretto
+        return $this->hasMany(Product::class, 'subcategory_id');
+    }
+
+    // Relazione per la categoria padre
+    public function parentCategory()
+    {
+        return $this->belongsTo(Category::class, 'parent_id'); // Cambiato da 'parent_category_id' a 'parent_id'
     }
 
     // Relazione per le sottocategorie
-    public function parentCategory()
-    {
-        return $this->belongsTo(Category::class, 'parent_category_id');
-    }
-
     public function subcategories()
     {
-        return $this->hasMany(Category::class, 'parent_category_id');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 }

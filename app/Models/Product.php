@@ -26,7 +26,7 @@ class Product extends Model
     }
 
     // Relazione con i dettagli dell'ordine
-    public function orderDetails()
+    public function orderDetail()
     {
         return $this->hasMany(OrderDetail::class);
     }
