@@ -15,6 +15,8 @@ class Product extends Model
         'price',
         'available_quantity',
         'subcategory_id',
+        'image',
+        'brand'
     ];
 
     // Relazione con la categoria
