@@ -14,13 +14,13 @@ class CategorySeeder extends Seeder
         $elettrodomestici = Category::create(['name' => 'Elettrodomestici']);
 
         // Sottocategorie per Elettronica
-        $smartphone = Category::create(['name' => 'Smartphone', 'parent_category_id' => $elettronica->id]);
-        $tablet = Category::create(['name' => 'Tablet', 'parent_category_id' => $elettronica->id]);
-        $computer = Category::create(['name' => 'Computer', 'parent_category_id' => $elettronica->id]);
+        $smartphone = Category::create(['name' => 'Smartphone', 'parent_id' => $elettronica->id]);
+        $tablet = Category::create(['name' => 'Tablet', 'parent_id' => $elettronica->id]);
+        $computer = Category::create(['name' => 'Computer', 'parent_id' => $elettronica->id]);
 
         // Sottocategorie per Elettrodomestici
-        $frigoriferi = Category::create(['name' => 'Frigoriferi', 'parent_category_id' => $elettrodomestici->id]);
-        $lavastoviglie = Category::create(['name' => 'Lavastoviglie', 'parent_category_id' => $elettrodomestici->id]);
-        $forni = Category::create(['name' => 'Forni', 'parent_category_id' => $elettrodomestici->id]);
+        $frigoriferi = Category::create(['name' => 'Frigoriferi', 'parent_id' => $elettrodomestici->id]);
+        $lavastoviglie = Category::create(['name' => 'Lavastoviglie', 'parent_id' => $elettrodomestici->id]);
+        $forni = Category::create(['name' => 'Forni', 'parent_id' => $elettrodomestici->id]);
     }
 }
