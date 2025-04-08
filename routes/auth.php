@@ -11,12 +11,18 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+// Rimuovi o commenta le rotte di registrazione
+// Route::get('register', [RegisteredUser Controller::class, 'create'])
+//             ->name('register');
+
+// Route::post('register', [RegisteredUser Controller::class, 'store']);
+
+// Aggiungi il reindirizzamento per la registrazione
+Route::get('register', function () {
+    return redirect('/');
+})->name('register');
+
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
-
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
