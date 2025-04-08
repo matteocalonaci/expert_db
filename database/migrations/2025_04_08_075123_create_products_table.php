@@ -13,6 +13,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
+            $table->string('image')->nullable();
+            $table->string('brand')->nullable();
             $table->integer('available_quantity');
             $table->foreignId('subcategory_id')->nullable()->constrained('categories')->onDelete('cascade');
             $table->timestamps();
