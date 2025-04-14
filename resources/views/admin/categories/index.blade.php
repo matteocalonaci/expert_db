@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid pt-5" style="background-color: orange; min-height: calc(100vh - 6rem);">
+<div class="container-fluid pt-5" style="background-color: rgb(246, 140, 31); min-height: calc(100vh - 6rem);">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="text-outline">Categorie</h1>
         <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Crea Nuova Categoria</a>

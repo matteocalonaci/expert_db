@@ -1,8 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid mt-4">
-    <h1 class="mb-4">Prodotti</h1>
+<div class="container-fluid pt-3 pb-3" style="background-color: rgb(246, 140, 31); min-height: calc(100vh - 6rem);">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-outline">Prodotti</h1>
+        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Crea Nuovo Prodotto</a>
+    </div>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -10,38 +13,70 @@
         </div>
     @endif
 
-    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Crea Nuovo Prodotto</a>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Descrizione</th>
-                <th>Prezzo</th>
-                <th>Stock</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($products as $product)
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered mb-0">
+            <thead class="thead-light text-center">
                 <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->description }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>{{ $product->stock }}</td>
-                    <td>
-                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning">Modifica</a>
-                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Elimina</button>
-                        </form>
-                    </td>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descrizione</th>
+                    <th>Prezzo</th>
+                    <th>Stock</th>
+                    <th>Brand</th>
+                    <th style="width: 120px;">Azioni</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($products as $product)
+                    <tr>
+                        <td>{{ $product->id }}</td>
+                        <td>{{ Str::limit($product->name, 30, '...') }}</td>
+                        <td>{{ Str::limit($product->description, 100, '...') }}</td>
+                        <td>€{{ number_format($product->price, 2, ',', '.') }}</td>
+                        <td>{{ $product->available_quantity }}</td>
+                        <td>{{ $product->brand }}</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning btn-sm mx-1" data-toggle="tooltip" title="Modifica">
+                                    <i class="fa-solid fa-pen text-white icon-size"></i>
+                                </a>
+                                <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm mx-1" onclick="return confirm('Sei sicuro di voler eliminare questo prodotto?');" data-toggle="tooltip" title="Elimina">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<style scoped>
+.text-outline {
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.icon-size {
+    font-size: 1rem;
+    display: inline-block;
+    line-height: 1;
+    margin: 0;
+}
+</style>
 @endsection
