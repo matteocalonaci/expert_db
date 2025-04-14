@@ -10,10 +10,10 @@
 
     <title>{{ config('app.name', 'Expert DB') }}</title>
 
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
@@ -21,15 +21,12 @@
 
 <body>
     <div id="app">
-
-
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="height: 6rem">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <a class="navbar-brand" href="{{ url('/') }}">
                     <div class="logo_expert_nav">
                         <img src="https://www.sbirciaprezzo.com/wp-content/uploads/2015/07/Expert-logo.jpg" alt="">
-                       </div>
-                    {{-- config('app.name', 'Laravel') --}}
+                    </div>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -47,17 +44,12 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            {{-- @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif --}}
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -94,9 +86,7 @@
 </html>
 
 <style scoped>
-    .logo_expert_nav{
-        img{
-            width: 13rem;
-        }
+    .logo_expert_nav img {
+        width: 13rem;
     }
 </style>
