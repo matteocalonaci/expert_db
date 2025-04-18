@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController; //<---- Import del controller precedentemente creato!
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
@@ -25,28 +25,15 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])
-    ->prefix('admin') //definisce il prefisso "admin/" per le rotte di questo gruppo
-    ->name('admin.') //definisce il pattern con cui generare i nomi delle rotte cioè "admin.qualcosa"
+    ->prefix('admin') // Definisce il prefisso "admin/" per le rotte di questo gruppo
+    ->name('admin.') // Definisce il pattern con cui generare i nomi delle rotte
     ->group(function () {
-
-        //Siamo nel gruppo quindi:
-        // - il percorso "/" diventa "admin/"
-        // - il nome della rotta ->name("dashboard") diventa ->name("admin.dashboard")
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-            // Rotte per le categorie
-    Route::resource('categories', CategoryController::class);
-
-      // Rotte per le sottocategorie
-    Route::resource('subcategories', SubcategoryController::class);
-
-    // Rotte per i prodotti
-    Route::resource('products', ProductController::class);
-
-    // Rotte per gli ordini
-    Route::resource('orders', OrderController::class);
-
-    // Rotte per i dettagli degli ordini
-    Route::resource('order_detail', OrderDetailsController::class);
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('categories', CategoryController::class);
+        Route::resource('subcategories', SubcategoryController::class);
+        Route::resource('products', ProductController::class);
+        Route::resource('orders', OrderController::class);
+        Route::resource('order_detail', OrderDetailsController::class);
     });
 
 require __DIR__ . '/auth.php';

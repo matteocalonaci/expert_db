@@ -4,7 +4,7 @@
 <div class="container-fluid pt-3 pb-3" style="background-color: rgb(246, 140, 31); min-height: calc(100vh - 6rem);">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <h1 class="text-center text-outline pt-5">{{ __('Navigazione') }}</h1>
+            <h1 class="text-center text-outline pt-5 text-white">{{ __('Navigazione') }}</h1>
             <div class="row pt-5">
                 <div class="col-md-4">
                     <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-primary btn-lg btn-block custom-btn">
