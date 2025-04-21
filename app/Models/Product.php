@@ -16,13 +16,19 @@ class Product extends Model
         'available_quantity',
         'subcategory_id',
         'image',
-        'brand'
+        'brand',
     ];
 
-    // Relazione con la categoria
+    // Relazione con la sottocategoria
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+
+    // Relazione con la categoria (attraverso la sottocategoria)
     public function category()
     {
-        return $this->belongsTo(Category::class, 'subcategory_id');
+        return $this->hasOneThrough(Category::class, Subcategory::class, 'id', 'id', 'subcategory_id', 'category_id');
     }
 
     // Relazione con i dettagli dell'ordine

@@ -13,14 +13,16 @@ class Subcategory extends Model
     protected $fillable = [
         'name',
         'slug',
-        'category_id', // Assicurati di includere anche category_id se lo stai utilizzando
+        'category_id',
     ];
 
+    // Relazione con la categoria principale
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    // Relazione con i prodotti
     public function products()
     {
         return $this->hasMany(Product::class);
