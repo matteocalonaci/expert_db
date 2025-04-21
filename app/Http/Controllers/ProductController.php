@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -37,16 +38,27 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer|min:0',
+            'image' => 'nullable|url',  // Cambia la validazione per accettare solo URL
             // Aggiungi altre regole di validazione se necessario
         ]);
 
+        // Salva il link dell'immagine (se fornito)
+        $imageUrl = $request->input('image');  // Se l'utente fornisce un URL, lo salviamo
+
         // Crea un nuovo prodotto
-        Product::create($request->only('name', 'description', 'price', 'stock'));
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'available_quantity' => $request->stock,
+            'subcategory_id' => $request->subcategory_id,  // Se hai il campo subcategory_id
+            'image' => $imageUrl,  // Salva l'URL
+            'brand' => $request->brand,
+        ]);
 
         // Reindirizza alla lista dei prodotti con un messaggio di successo
         return redirect()->route('admin.products.index')->with('success', 'Prodotto creato con successo.');
     }
-
     /**
      * Display the specified resource.
      */
@@ -61,8 +73,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        // Recupera tutte le sottocategorie per il campo select
+        $subcategories = Subcategory::all();
+
         // Mostra il modulo per modificare un prodotto esistente
-        return view('admin.products.edit', compact('product'));
+        return view('admin.products.edit', compact('product', 'subcategories'));
     }
 
     /**
@@ -76,11 +91,24 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer|min:0',
-            // Aggiungi altre regole di validazione se necessario
+            'brand' => 'nullable|string|max:255',
+            'image' => 'nullable|url',
+            'subcategory_id' => 'required|exists:subcategories,id',  // Assicurati che il valore della sottocategoria sia valido
         ]);
 
+        // Salva l'URL dell'immagine (se fornito)
+        $imageUrl = $request->input('image');  // Se l'utente fornisce un URL, lo salviamo
+
         // Aggiorna il prodotto esistente
-        $product->update($request->only('name', 'description', 'price', 'stock'));
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'available_quantity' => $request->stock,
+            'subcategory_id' => $request->subcategory_id,  // Aggiorna la sottocategoria
+            'image' => $imageUrl,  // Salva l'URL
+            'brand' => $request->brand,
+        ]);
 
         // Reindirizza alla lista dei prodotti con un messaggio di successo
         return redirect()->route('admin.products.index')->with('success', 'Prodotto aggiornato con successo.');
