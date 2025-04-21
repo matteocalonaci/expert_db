@@ -22,8 +22,9 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all(); // Ottieni tutte le categorie per il dropdown
-        return view('admin.subcategories.create', compact('categories')); // Ritorna la vista per creare una nuova sottocategoria
+        // Ottieni solo le categorie principali (senza parent_id)
+        $categories = Category::whereNull('parent_id')->get();
+        return view('admin.subcategories.create', compact('categories'));
     }
 
     /**
@@ -54,10 +55,10 @@ class SubcategoryController extends Controller
      */
     public function edit(Subcategory $subcategory)
     {
-        $categories = Category::all(); // Ottieni tutte le categorie per il dropdown
-        return view('admin.subcategories.edit', compact('subcategory', 'categories')); // Ritorna la vista per modificare la sottocategoria
+        // Ottieni solo le categorie principali (senza parent_id)
+        $categories = Category::whereNull('parent_id')->get();
+        return view('admin.subcategories.edit', compact('subcategory', 'categories'));
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -79,6 +80,7 @@ class SubcategoryController extends Controller
 
         return redirect()->route('admin.subcategories.index')->with('success', 'Sottocategoria aggiornata con successo.');
     }
+
     /**
      * Remove the specified resource from storage.
      */

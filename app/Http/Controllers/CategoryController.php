@@ -13,10 +13,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // Recupera solo le categorie principali (senza parent_id) e le loro sottocategorie
-        $categories = Category::with('subcategories')->whereNull('parent_id')->get();
+        $categories = Category::with('subcategories')->get(); // Carica le categorie con le sottocategorie
         return view('admin.categories.index', compact('categories'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -34,10 +34,12 @@ class CategoryController extends Controller
         // Validazione dei dati
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255', // Aggiunto per la descrizione se necessario
+            'parent_id' => 'nullable|exists:categories,id', // Permette di specificare una categoria padre
         ]);
 
         // Crea una nuova categoria
-        Category::create($request->only('name'));
+        Category::create($request->only('name', 'description', 'parent_id'));
 
         // Reindirizza alla lista delle categorie con un messaggio di successo
         return redirect()->route('admin.categories.index')->with('success', 'Categoria creata con successo.');
@@ -69,10 +71,12 @@ class CategoryController extends Controller
         // Validazione dei dati
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255', // Aggiunto per la descrizione se necessario
+            'parent_id' => 'nullable|exists:categories,id', // Permette di specificare una categoria padre
         ]);
 
         // Aggiorna la categoria esistente
-        $category->update($request->only('name'));
+        $category->update($request->only('name', 'description', 'parent_id'));
 
         // Reindirizza alla lista delle categorie con un messaggio di successo
         return redirect()->route('admin.categories.index')->with('success', 'Categoria aggiornata con successo.');
