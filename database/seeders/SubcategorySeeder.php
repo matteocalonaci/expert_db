@@ -10,13 +10,21 @@ class SubcategorySeeder extends Seeder
     public function run()
     {
         // Sottocategorie per Elettronica
-        Subcategory::create(['name' => 'Smartphone', 'slug' => 'smartphone', 'category_id' => 1]); // Assicurati di usare l'ID corretto
-        Subcategory::create(['name' => 'Tablet', 'slug' => 'tablet', 'category_id' => 1]);
-        Subcategory::create(['name' => 'Computer', 'slug' => 'computer', 'category_id' => 1]);
+        $this->createSubcategory('smartphone', 'Smartphone', 1);
+        $this->createSubcategory('tablet', 'Tablet', 1);
+        $this->createSubcategory('computer', 'Computer', 1);
 
         // Sottocategorie per Elettrodomestici
-        Subcategory::create(['name' => 'Frigoriferi', 'slug' => 'frigoriferi', 'category_id' => 2]);
-        Subcategory::create(['name' => 'Lavastoviglie', 'slug' => 'lavastoviglie', 'category_id' => 2]);
-        Subcategory::create(['name' => 'Forni', 'slug' => 'forni', 'category_id' => 2]);
+        $this->createSubcategory('frigoriferi', 'Frigoriferi', 2);
+        $this->createSubcategory('lavastoviglie', 'Lavastoviglie', 2);
+        $this->createSubcategory('forni', 'Forni', 2);
+    }
+
+    private function createSubcategory($slug, $name, $categoryId)
+    {
+        Subcategory::updateOrCreate(
+            ['slug' => $slug],
+            ['name' => $name, 'category_id' => $categoryId]
+        );
     }
 }
