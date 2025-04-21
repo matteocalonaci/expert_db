@@ -29,10 +29,10 @@
                     <td>{{ $subcategory->category->name }}</td>
                     <td>
                         <a href="{{ route('admin.subcategories.edit', $subcategory) }}" class="btn btn-warning">Modifica</a>
-                        <form action="{{ route('admin.subcategories.destroy', $subcategory) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.subcategories.destroy', $subcategory) }}" method="POST" style="display:inline;" id="delete-form-{{ $subcategory->id }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Elimina</button>
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $subcategory->id }})">Elimina</button>
                         </form>
                     </td>
                 </tr>
@@ -40,4 +40,25 @@
         </tbody>
     </table>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Sei sicuro?',
+            text: "Una volta eliminato, non potrai recuperare questo elemento!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Elimina',
+            cancelButtonText: 'Annulla'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Se l'utente conferma, invia il modulo
+                document.getElementById('delete-form-' + id).submit();
+            } else {
+                Swal.fire('L\'elemento non è stato eliminato!');
+            }
+        });
+    }
+</script>
 @endsection
