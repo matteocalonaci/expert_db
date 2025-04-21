@@ -4,7 +4,9 @@
 <div class="container-fluid pt-3 pb-3" style="background-color: rgb(246, 140, 31); min-height: calc(100vh - 6rem);">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="text-outline">Prodotti</h1>
-        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Crea Nuovo Prodotto</a>
+        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus mr-1"></i> Crea Nuovo Prodotto
+        </a>
     </div>
 
     @if (session('success'))
@@ -35,16 +37,28 @@
                         <td>€{{ number_format($product->price, 2, ',', '.') }}</td>
                         <td>{{ $product->available_quantity }}</td>
                         <td>{{ $product->brand }}</td>
-                        <td>
+                        <td class="text-center">
                             <div class="d-flex justify-content-center">
-                                <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning btn-sm mx-1" data-toggle="tooltip" title="Modifica">
-                                    <i class="fa-solid fa-pen text-white icon-size"></i>
+                                {{-- Modifica --}}
+                                <a href="{{ route('admin.products.edit', $product) }}"
+                                   class="btn btn-warning btn-sm mx-1"
+                                   data-toggle="tooltip"
+                                   title="Modifica">
+                                    <i class="fas fa-edit text-white icon-size"></i>
                                 </a>
-                                <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display:inline;">
+
+                                {{-- Elimina --}}
+                                <form action="{{ route('admin.products.destroy', $product) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto?');"
+                                      style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm mx-1" onclick="return confirm('Sei sicuro di voler eliminare questo prodotto?');" data-toggle="tooltip" title="Elimina">
-                                        <i class="fa-solid fa-trash"></i>
+                                    <button type="submit"
+                                            class="btn btn-danger btn-sm mx-1"
+                                            data-toggle="tooltip"
+                                            title="Elimina">
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>
                             </div>
@@ -57,7 +71,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
@@ -67,9 +81,9 @@
     color: white;
     text-shadow:
         -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000;
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
 }
 
 .icon-size {
