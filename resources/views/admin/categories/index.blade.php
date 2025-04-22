@@ -44,12 +44,17 @@
                                     <div class="card-body d-flex flex-column align-items-center">
                                         <h5 class="card-title">{{ $subcategory->name }}</h5>
                                         <div class="mt-3 d-flex gap-2">
-                                            <a href="{{ route('admin.subcategories.edit', $subcategory->id) }}" class="btn btn-warning btn-sm">  <i class="fas fa-edit text-white icon-size"></i></a>
+                                            <a href="{{ route('admin.subcategories.edit', $subcategory->id) }}" class="btn btn-warning btn-sm">
+                                                <i class="fas fa-edit text-white icon-size"></i>
+                                            </a>
                                             <form action="{{ route('admin.subcategories.destroy', $subcategory->id) }}" method="POST" onsubmit="return confirm('Eliminare questa sottocategoria?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                             </form>
+                                            <a href="{{ route('admin.products.index', ['subcategory_id' => $subcategory->id]) }}" class="btn btn-info btn-sm">
+                                                <i class="fas fa-list"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
