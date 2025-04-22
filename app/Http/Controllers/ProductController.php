@@ -11,10 +11,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Recupera tutti i prodotti dal database
-        $products = Product::all();
+        $subcategoryId = $request->get('subcategory_id');
+        $products = Product::when($subcategoryId, function ($query) use ($subcategoryId) {
+            return $query->where('subcategory_id', $subcategoryId);
+        })->get();
+
         return view('admin.products.index', compact('products'));
     }
 
